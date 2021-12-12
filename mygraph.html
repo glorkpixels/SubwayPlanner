@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 1800px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "Oberlaa", "label": "Oberlaa", "shape": "dot"}, {"id": "Neulaa", "label": "Neulaa", "shape": "dot"}, {"id": "Alaudagasse", "label": "Alaudagasse", "shape": "dot"}, {"id": "Altes Landgut", "label": "Altes Landgut", "shape": "dot"}, {"id": "Troststrasse", "label": "Troststrasse", "shape": "dot"}, {"id": "Reumannplatz", "label": "Reumannplatz", "shape": "dot"}, {"id": "Keplerplatz", "label": "Keplerplatz", "shape": "dot"}, {"id": "Suedtiroler Platz - Hauptbahnhof", "label": "Suedtiroler Platz - Hauptbahnhof", "shape": "dot"}, {"id": "Taubstummengasse", "label": "Taubstummengasse", "shape": "dot"}, {"id": "Karlsplatz", "label": "Karlsplatz", "shape": "dot"}, {"id": "Stephansplatz", "label": "Stephansplatz", "shape": "dot"}, {"id": "Schwedenplatz", "label": "Schwedenplatz", "shape": "dot"}, {"id": "Nestroyplatz", "label": "Nestroyplatz", "shape": "dot"}, {"id": "Praterstern", "label": "Praterstern", "shape": "dot"}, {"id": "Vorgartenstrasse", "label": "Vorgartenstrasse", "shape": "dot"}, {"id": "Donauinsel", "label": "Donauinsel", "shape": "dot"}, {"id": "Kaisermuehlen/VIC", "label": "Kaisermuehlen/VIC", "shape": "dot"}, {"id": "Alte Donau", "label": "Alte Donau", "shape": "dot"}, {"id": "Kagran", "label": "Kagran", "shape": "dot"}, {"id": "Kagraner Platz", "label": "Kagraner Platz", "shape": "dot"}, {"id": "Rennbahnweg", "label": "Rennbahnweg", "shape": "dot"}, {"id": "Aderklaaer strasse", "label": "Aderklaaer strasse", "shape": "dot"}, {"id": "Grossfeldsiedlung", "label": "Grossfeldsiedlung", "shape": "dot"}, {"id": "Leopoldau", "label": "Leopoldau", "shape": "dot"}, {"id": "Seestadt", "label": "Seestadt", "shape": "dot"}, {"id": "Aspern Nord", "label": "Aspern Nord", "shape": "dot"}, {"id": "Hausfeldstrasse", "label": "Hausfeldstrasse", "shape": "dot"}, {"id": "Aspernstrasse", "label": "Aspernstrasse", "shape": "dot"}, {"id": "Donauspital", "label": "Donauspital", "shape": "dot"}, {"id": "Hardeggasse", "label": "Hardeggasse", "shape": "dot"}, {"id": "Stadlau", "label": "Stadlau", "shape": "dot"}, {"id": "Donaustadtbruecke", "label": "Donaustadtbruecke", "shape": "dot"}, {"id": "Donaumarina", "label": "Donaumarina", "shape": "dot"}, {"id": "Stadion", "label": "Stadion", "shape": "dot"}, {"id": "Krieau", "label": "Krieau", "shape": "dot"}, {"id": "Messe-Prater", "label": "Messe-Prater", "shape": "dot"}, {"id": "Taborstrasse", "label": "Taborstrasse", "shape": "dot"}, {"id": "Schottenring", "label": "Schottenring", "shape": "dot"}, {"id": "Schottentor", "label": "Schottentor", "shape": "dot"}, {"id": "Rathaus", "label": "Rathaus", "shape": "dot"}, {"id": "Volkstheater", "label": "Volkstheater", "shape": "dot"}, {"id": "Museumsquartier", "label": "Museumsquartier", "shape": "dot"}, {"id": "Ottakring", "label": "Ottakring", "shape": "dot"}, {"id": "Kendlerstrasse", "label": "Kendlerstrasse", "shape": "dot"}, {"id": "Huetteldorfer strasse", "label": "Huetteldorfer strasse", "shape": "dot"}, {"id": "Johnstrasse", "label": "Johnstrasse", "shape": "dot"}, {"id": "Schweglerstrasse", "label": "Schweglerstrasse", "shape": "dot"}, {"id": "Westbahnhof", "label": "Westbahnhof", "shape": "dot"}, {"id": "Zieglergasse", "label": "Zieglergasse", "shape": "dot"}, {"id": "Neubaugasse", "label": "Neubaugasse", "shape": "dot"}, {"id": "Herrengasse", "label": "Herrengasse", "shape": "dot"}, {"id": "Stubentor", "label": "Stubentor", "shape": "dot"}, {"id": "Landstrasse", "label": "Landstrasse", "shape": "dot"}, {"id": "Rochusgasse", "label": "Rochusgasse", "shape": "dot"}, {"id": "Kardinal-Nagl-Platz", "label": "Kardinal-Nagl-Platz", "shape": "dot"}, {"id": "Schlachthausgasse", "label": "Schlachthausgasse", "shape": "dot"}, {"id": "Erdberg", "label": "Erdberg", "shape": "dot"}, {"id": "Gasometer", "label": "Gasometer", "shape": "dot"}, {"id": "Zippererstrasse", "label": "Zippererstrasse", "shape": "dot"}, {"id": "Enkplatz", "label": "Enkplatz", "shape": "dot"}, {"id": "Simmering", "label": "Simmering", "shape": "dot"}, {"id": "Huetteldorf", "label": "Huetteldorf", "shape": "dot"}, {"id": "Ober St. Veit", "label": "Ober St. Veit", "shape": "dot"}, {"id": "Unter St. Veit", "label": "Unter St. Veit", "shape": "dot"}, {"id": "Braunschweiggasse", "label": "Braunschweiggasse", "shape": "dot"}, {"id": "Hietzing", "label": "Hietzing", "shape": "dot"}, {"id": "Schoenbrunn", "label": "Schoenbrunn", "shape": "dot"}, {"id": "Meidling Haupstrasse", "label": "Meidling Haupstrasse", "shape": "dot"}, {"id": "Laengenfeldgasse", "label": "Laengenfeldgasse", "shape": "dot"}, {"id": "Margaretenguertel", "label": "Margaretenguertel", "shape": "dot"}, {"id": "Pilgramgasse", "label": "Pilgramgasse", "shape": "dot"}, {"id": "Kettenbrueckengasse", "label": "Kettenbrueckengasse", "shape": "dot"}, {"id": "Stadtpark", "label": "Stadtpark", "shape": "dot"}, {"id": "Rossauer Laende", "label": "Rossauer Laende", "shape": "dot"}, {"id": "Friedensbruecke", "label": "Friedensbruecke", "shape": "dot"}, {"id": "Spittelau", "label": "Spittelau", "shape": "dot"}, {"id": "Heiligenstradt", "label": "Heiligenstradt", "shape": "dot"}, {"id": "Siebenhirten", "label": "Siebenhirten", "shape": "dot"}, {"id": "Perfektastrasse", "label": "Perfektastrasse", "shape": "dot"}, {"id": "Erlaaer strasse", "label": "Erlaaer strasse", "shape": "dot"}, {"id": "Alterlaa", "label": "Alterlaa", "shape": "dot"}, {"id": "Am Schoepfwerk", "label": "Am Schoepfwerk", "shape": "dot"}, {"id": "Tschwerttegasse", "label": "Tschwerttegasse", "shape": "dot"}, {"id": "Bahnhof Meidling", "label": "Bahnhof Meidling", "shape": "dot"}, {"id": "Niederhofstrasse", "label": "Niederhofstrasse", "shape": "dot"}, {"id": "Gumpendorfer strasse", "label": "Gumpendorfer strasse", "shape": "dot"}, {"id": "Burggasse-Stadthalle", "label": "Burggasse-Stadthalle", "shape": "dot"}, {"id": "Thaliastrasse", "label": "Thaliastrasse", "shape": "dot"}, {"id": "Josefstaedter strasse", "label": "Josefstaedter strasse", "shape": "dot"}, {"id": "Alser strasse", "label": "Alser strasse", "shape": "dot"}, {"id": "Michelbeuern - AKH", "label": "Michelbeuern - AKH", "shape": "dot"}, {"id": "Waehringer strasse - Volksoper", "label": "Waehringer strasse - Volksoper", "shape": "dot"}, {"id": "Nussdorfer strasse", "label": "Nussdorfer strasse", "shape": "dot"}, {"id": "Jaegerstrasse", "label": "Jaegerstrasse", "shape": "dot"}, {"id": "Dresdner strasse", "label": "Dresdner strasse", "shape": "dot"}, {"id": "Handelskai", "label": "Handelskai", "shape": "dot"}, {"id": "Neue Donau", "label": "Neue Donau", "shape": "dot"}, {"id": "Floridsdorf", "label": "Floridsdorf", "shape": "dot"}]);
+        edges = new vis.DataSet([{"from": "Oberlaa", "to": "Neulaa", "weight": 1}, {"from": "Neulaa", "to": "Alaudagasse", "weight": 1}, {"from": "Alaudagasse", "to": "Altes Landgut", "weight": 1}, {"from": "Altes Landgut", "to": "Troststrasse", "weight": 1}, {"from": "Troststrasse", "to": "Reumannplatz", "weight": 1}, {"from": "Reumannplatz", "to": "Keplerplatz", "weight": 1}, {"from": "Keplerplatz", "to": "Suedtiroler Platz - Hauptbahnhof", "weight": 1}, {"from": "Suedtiroler Platz - Hauptbahnhof", "to": "Taubstummengasse", "weight": 1}, {"from": "Taubstummengasse", "to": "Karlsplatz", "weight": 1}, {"from": "Karlsplatz", "to": "Stephansplatz", "weight": 1}, {"from": "Stephansplatz", "to": "Schwedenplatz", "weight": 1}, {"from": "Schwedenplatz", "to": "Nestroyplatz", "weight": 1}, {"from": "Nestroyplatz", "to": "Praterstern", "weight": 1}, {"from": "Praterstern", "to": "Vorgartenstrasse", "weight": 1}, {"from": "Vorgartenstrasse", "to": "Donauinsel", "weight": 1}, {"from": "Donauinsel", "to": "Kaisermuehlen/VIC", "weight": 1}, {"from": "Kaisermuehlen/VIC", "to": "Alte Donau", "weight": 1}, {"from": "Alte Donau", "to": "Kagran", "weight": 1}, {"from": "Kagran", "to": "Kagraner Platz", "weight": 1}, {"from": "Kagraner Platz", "to": "Rennbahnweg", "weight": 1}, {"from": "Rennbahnweg", "to": "Aderklaaer strasse", "weight": 1}, {"from": "Aderklaaer strasse", "to": "Grossfeldsiedlung", "weight": 1}, {"from": "Grossfeldsiedlung", "to": "Leopoldau", "weight": 1}, {"from": "Seestadt", "to": "Aspern Nord", "weight": 1}, {"from": "Aspern Nord", "to": "Hausfeldstrasse", "weight": 1}, {"from": "Hausfeldstrasse", "to": "Aspernstrasse", "weight": 1}, {"from": "Aspernstrasse", "to": "Donauspital", "weight": 1}, {"from": "Donauspital", "to": "Hardeggasse", "weight": 1}, {"from": "Hardeggasse", "to": "Stadlau", "weight": 1}, {"from": "Stadlau", "to": "Donaustadtbruecke", "weight": 1}, {"from": "Donaustadtbruecke", "to": "Donaumarina", "weight": 1}, {"from": "Donaumarina", "to": "Stadion", "weight": 1}, {"from": "Stadion", "to": "Krieau", "weight": 1}, {"from": "Krieau", "to": "Messe-Prater", "weight": 1}, {"from": "Messe-Prater", "to": "Praterstern", "weight": 1}, {"from": "Praterstern", "to": "Taborstrasse", "weight": 1}, {"from": "Taborstrasse", "to": "Schottenring", "weight": 1}, {"from": "Schottenring", "to": "Schottentor", "weight": 1}, {"from": "Schottentor", "to": "Rathaus", "weight": 1}, {"from": "Rathaus", "to": "Volkstheater", "weight": 1}, {"from": "Volkstheater", "to": "Museumsquartier", "weight": 1}, {"from": "Museumsquartier", "to": "Karlsplatz", "weight": 1}, {"from": "Ottakring", "to": "Kendlerstrasse", "weight": 1}, {"from": "Kendlerstrasse", "to": "Huetteldorfer strasse", "weight": 1}, {"from": "Huetteldorfer strasse", "to": "Johnstrasse", "weight": 1}, {"from": "Johnstrasse", "to": "Schweglerstrasse", "weight": 1}, {"from": "Schweglerstrasse", "to": "Westbahnhof", "weight": 1}, {"from": "Westbahnhof", "to": "Zieglergasse", "weight": 1}, {"from": "Zieglergasse", "to": "Neubaugasse", "weight": 1}, {"from": "Neubaugasse", "to": "Volkstheater", "weight": 1}, {"from": "Volkstheater", "to": "Herrengasse", "weight": 1}, {"from": "Herrengasse", "to": "Stephansplatz", "weight": 1}, {"from": "Stephansplatz", "to": "Stubentor", "weight": 1}, {"from": "Stubentor", "to": "Landstrasse", "weight": 1}, {"from": "Landstrasse", "to": "Rochusgasse", "weight": 1}, {"from": "Rochusgasse", "to": "Kardinal-Nagl-Platz", "weight": 1}, {"from": "Kardinal-Nagl-Platz", "to": "Schlachthausgasse", "weight": 1}, {"from": "Schlachthausgasse", "to": "Erdberg", "weight": 1}, {"from": "Erdberg", "to": "Gasometer", "weight": 1}, {"from": "Gasometer", "to": "Zippererstrasse", "weight": 1}, {"from": "Zippererstrasse", "to": "Enkplatz", "weight": 1}, {"from": "Enkplatz", "to": "Simmering", "weight": 1}, {"from": "Huetteldorf", "to": "Ober St. Veit", "weight": 1}, {"from": "Ober St. Veit", "to": "Unter St. Veit", "weight": 1}, {"from": "Unter St. Veit", "to": "Braunschweiggasse", "weight": 1}, {"from": "Braunschweiggasse", "to": "Hietzing", "weight": 1}, {"from": "Hietzing", "to": "Schoenbrunn", "weight": 1}, {"from": "Schoenbrunn", "to": "Meidling Haupstrasse", "weight": 1}, {"from": "Meidling Haupstrasse", "to": "Laengenfeldgasse", "weight": 1}, {"from": "Laengenfeldgasse", "to": "Margaretenguertel", "weight": 1}, {"from": "Margaretenguertel", "to": "Pilgramgasse", "weight": 1}, {"from": "Pilgramgasse", "to": "Kettenbrueckengasse", "weight": 1}, {"from": "Kettenbrueckengasse", "to": "Karlsplatz", "weight": 1}, {"from": "Karlsplatz", "to": "Stadtpark", "weight": 1}, {"from": "Stadtpark", "to": "Landstrasse", "weight": 1}, {"from": "Landstrasse", "to": "Schwedenplatz", "weight": 1}, {"from": "Schwedenplatz", "to": "Schottenring", "weight": 1}, {"from": "Schottenring", "to": "Rossauer Laende", "weight": 1}, {"from": "Rossauer Laende", "to": "Friedensbruecke", "weight": 1}, {"from": "Friedensbruecke", "to": "Spittelau", "weight": 1}, {"from": "Spittelau", "to": "Heiligenstradt", "weight": 1}, {"from": "Siebenhirten", "to": "Perfektastrasse", "weight": 1}, {"from": "Perfektastrasse", "to": "Erlaaer strasse", "weight": 1}, {"from": "Erlaaer strasse", "to": "Alterlaa", "weight": 1}, {"from": "Alterlaa", "to": "Am Schoepfwerk", "weight": 1}, {"from": "Am Schoepfwerk", "to": "Tschwerttegasse", "weight": 1}, {"from": "Tschwerttegasse", "to": "Bahnhof Meidling", "weight": 1}, {"from": "Bahnhof Meidling", "to": "Niederhofstrasse", "weight": 1}, {"from": "Niederhofstrasse", "to": "Laengenfeldgasse", "weight": 1}, {"from": "Laengenfeldgasse", "to": "Gumpendorfer strasse", "weight": 1}, {"from": "Gumpendorfer strasse", "to": "Westbahnhof", "weight": 1}, {"from": "Westbahnhof", "to": "Burggasse-Stadthalle", "weight": 1}, {"from": "Burggasse-Stadthalle", "to": "Thaliastrasse", "weight": 1}, {"from": "Thaliastrasse", "to": "Josefstaedter strasse", "weight": 1}, {"from": "Josefstaedter strasse", "to": "Alser strasse", "weight": 1}, {"from": "Alser strasse", "to": "Michelbeuern - AKH", "weight": 1}, {"from": "Michelbeuern - AKH", "to": "Waehringer strasse - Volksoper", "weight": 1}, {"from": "Waehringer strasse - Volksoper", "to": "Nussdorfer strasse", "weight": 1}, {"from": "Nussdorfer strasse", "to": "Spittelau", "weight": 1}, {"from": "Spittelau", "to": "Jaegerstrasse", "weight": 1}, {"from": "Jaegerstrasse", "to": "Dresdner strasse", "weight": 1}, {"from": "Dresdner strasse", "to": "Handelskai", "weight": 1}, {"from": "Handelskai", "to": "Neue Donau", "weight": 1}, {"from": "Neue Donau", "to": "Floridsdorf", "weight": 1}, {"from": "Altes Landgut", "to": "Kagraner Platz", "weight": 1}, {"from": "Kagraner Platz", "to": "Stadlau", "weight": 1}, {"from": "Stadlau", "to": "Johnstrasse", "weight": 1}, {"from": "Johnstrasse", "to": "Enkplatz", "weight": 1}, {"from": "Enkplatz", "to": "Schoenbrunn", "weight": 1}, {"from": "Schoenbrunn", "to": "Bahnhof Meidling", "weight": 1}, {"from": "Bahnhof Meidling", "to": "Thaliastrasse", "weight": 1}, {"from": "Thaliastrasse", "to": "Alser strasse", "weight": 1}, {"from": "Alser strasse", "to": "Neue Donau", "weight": 1}, {"from": "Neue Donau", "to": "Altes Landgut", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
